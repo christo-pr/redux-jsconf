@@ -1,8 +1,18 @@
-import React from 'react';
-import './App.css';
+import React from "react"
+import "normalize.css"
+
+import "./App.css"
+import { GlobalStyles } from "styles/"
+
+import { Board } from "views/"
 
 function App() {
-  return (<h1>Appp</h1>);
+  return (
+    <>
+      <GlobalStyles />
+      <Board />
+    </>
+  )
 }
 
-export default App;
+export default App
