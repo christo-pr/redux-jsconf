@@ -9,6 +9,7 @@ import {
 } from "react-awesome-styled-grid"
 // Fonts
 import PressStart from "assets/fonts/PressStart2P-Regular.ttf"
+import Cursor1 from "assets/img/cursor-1.png"
 
 export const Container = styled(RAWContainer)``
 
@@ -22,6 +23,10 @@ export const GlobalStyles = createGlobalStyle`
         src: local('Press Start 2P'), local('Press Start 2P'),
         url(${PressStart}) format('ttf');
         font-style: normal;
+    }
+
+    html {
+      cursor: url(${Cursor1}), auto;
     }
 
     body {
