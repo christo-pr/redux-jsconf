@@ -8,10 +8,10 @@ export function Board(props) {
     <GameBackground>
       <Container>
         <Row>
-          <Col xs={12} lg={6}>
-            <Counter />
+          <Col xs={12} lg={7}>
+            <Counter duration={3} />
           </Col>
-          <Col xs={12} lg={6}>
+          <Col xs={12} lg={4} offset={{ lg: 1 }}>
             <HP />
           </Col>
         </Row>
