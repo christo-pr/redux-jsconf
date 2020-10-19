@@ -5,15 +5,11 @@ var interval
 export function useBackwardsCounter(from) {
   const [counter, setCounter] = useState(from)
 
-  useEffect(() => {
+  const initCounter = () => {
     interval = setInterval(() => {
-      setCounter(count => count - 1)
+      setCounter((count) => count - 1)
     }, 1000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
+  }
 
   useEffect(() => {
     if (counter === 0) {
@@ -21,5 +17,12 @@ export function useBackwardsCounter(from) {
     }
   }, [counter])
 
-  return counter
+  return {
+    initCounter,
+    counter,
+    resetCounter: () => {
+      setCounter(from)
+      initCounter()
+    },
+  }
 }

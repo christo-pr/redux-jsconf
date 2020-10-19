@@ -4,8 +4,8 @@ import { StyledCounter } from "styles/"
 import { useCounter } from "hooks/"
 
 export function Counter(props) {
-  const { duration } = props
-  const { counter, active } = useCounter(duration)
+  const { duration, onTimeout } = props
+  const { counter, active } = useCounter(duration, onTimeout)
 
   return <StyledCounter active={active}>{counter}</StyledCounter>
 }
