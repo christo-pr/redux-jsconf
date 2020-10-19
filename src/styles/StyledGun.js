@@ -3,7 +3,7 @@ import GunImg from "assets/img/gun.png"
 
 export const StyledGun = styled.div`
   background-image: url(${GunImg});
-  height: 100px;
+  height: 200px;
   left: 50%;
   transform: translateX(-50%);
   position: absolute;

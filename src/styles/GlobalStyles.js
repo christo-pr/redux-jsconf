@@ -5,7 +5,7 @@ import styled from "styled-components"
 import {
   Container as RAWContainer,
   Row as RAWRow,
-  Col as RawCol,
+  Col as RawCol
 } from "react-awesome-styled-grid"
 // Fonts
 import PressStart from "assets/fonts/PressStart2P-Regular.ttf"
@@ -28,8 +28,9 @@ export const GlobalStyles = createGlobalStyle`
     html {
       cursor: url(${Cursor1}), auto;
     }
-
+    
     body {
+      overflow: hidden;
       * {
         font-family: 'Press Start 2P';
       }
