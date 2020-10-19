@@ -9,7 +9,7 @@ import {
   Col,
   StartButton,
 } from "styles/"
-import { HP, Monsters, Gun, Score, Alert } from "components/"
+import { HP, Monsters, Gun, Score, Alert, Counter } from "components/"
 
 // Update Gun position
 function handleMouseMove(e) {
@@ -68,12 +68,11 @@ export function Board(props) {
     setTimeout(() => {
       onDoneNotice()
       setNotice({ show: false })
-    }, 1000)
+    }, 2000)
   }
 
   // Handle monster click
   const onMonsterAction = async (isMonster, timeout = false) => {
-    const randomMonsters = await getRandomMonsters()
     let noticeType
 
     // On timeout, just lose a life
@@ -90,7 +89,8 @@ export function Board(props) {
       }
     }
 
-    showNotice(noticeType, () => {
+    showNotice(noticeType, async () => {
+      const randomMonsters = await getRandomMonsters()
       resetCounter()
       setMonsters(randomMonsters)
     })
@@ -111,11 +111,12 @@ export function Board(props) {
         {gameStart ? (
           <>
             {counter === 0 ? (
-              <Monsters
-                monsters={monsters}
-                onClick={onMonsterAction}
-                onTimeout={onMonsterAction}
-              />
+              <>
+                <Col xs={12} lg={12}>
+                  <Counter duration={3} onTimeout={onMonsterAction} />
+                </Col>
+                <Monsters monsters={monsters} onClick={onMonsterAction} />
+              </>
             ) : (
               <GameCounter>{counter}</GameCounter>
             )}
