@@ -1,30 +1,9 @@
 import React, { useEffect, useState } from "react"
 
 import { useBackwardsCounter } from "hooks/"
-import {
-  GameBackground,
-  GameCounter,
-  Container,
-  Row,
-  Col,
-  StartButton,
-} from "styles/"
-import { HP, Monsters, Gun, Score, Alert, Counter } from "components/"
-
-// Update Gun position
-function handleMouseMove(e) {
-  const pointer = document.getElementsByClassName("shootgun")[0]
-  if (!pointer) return
-
-  pointer.setAttribute("style", "left:" + e.pageX + "px;")
-}
-
-// Fetch 4 random monsters
-async function getRandomMonsters() {
-  const response = await fetch("/api/monsters")
-  const data = await response.json()
-  return data
-}
+import { fetchRandomMonsters } from "api"
+import { GameCounter, Container, Row, Col, StartButton } from "styles/"
+import { Scenario, HP, Monsters, Gun, Score, Alert, Counter } from "components/"
 
 export function ReduxMonsters(props) {
   const { counter, initCounter, stopCounter } = useBackwardsCounter(3)
@@ -38,7 +17,7 @@ export function ReduxMonsters(props) {
   // Fetch initial monsters
   useEffect(() => {
     async function fetchMonsters() {
-      const randomMonsters = await getRandomMonsters()
+      const randomMonsters = await fetchRandomMonsters()
       setMonsters(randomMonsters)
     }
 
@@ -103,14 +82,14 @@ export function ReduxMonsters(props) {
 
     showNotice(noticeType, async () => {
       stopCounter()
-      const randomMonsters = await getRandomMonsters()
+      const randomMonsters = await fetchRandomMonsters()
       initCounter()
       setMonsters(randomMonsters)
     })
   }
 
   return (
-    <GameBackground onMouseMove={(ev) => handleMouseMove(ev)}>
+    <Scenario>
       <Alert {...notice} />
       <Container>
         <Row>
@@ -147,6 +126,6 @@ export function ReduxMonsters(props) {
           </Row>
         )}
       </Container>
-    </GameBackground>
+    </Scenario>
   )
 }
