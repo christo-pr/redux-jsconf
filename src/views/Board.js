@@ -27,12 +27,13 @@ async function getRandomMonsters() {
 }
 
 export function Board(props) {
-  const { counter, resetCounter, initCounter } = useBackwardsCounter(3)
+  const { counter, initCounter, stopCounter } = useBackwardsCounter(3)
   const [monsters, setMonsters] = useState([]) // Part of global state
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
   const [gameStart, setGameStart] = useState(false) // Part of global state?
-  const [notice, setNotice] = useState({})
+  const [hasChoose, setHasChoose] = useState(false) // Part of global state?
+  const [notice, setNotice] = useState({}) // Part of global state?
 
   // Fetch initial monsters
   useEffect(() => {
@@ -50,17 +51,27 @@ export function Board(props) {
       setNotice({ type: "error", show: true })
       setLifes(3)
       setGameStart(false)
+      stopCounter()
     }
   }, [lifes])
 
   // Start game
   useEffect(() => {
     if (gameStart) {
-      setScore(0)
       setNotice({ show: false })
+      setHasChoose(false)
+      setScore(0)
       initCounter()
     }
   }, [gameStart])
+
+  // Reset user choose state
+  useEffect(() => {
+    // Only when counter has its value reset
+    if (counter === 3) {
+      setHasChoose(false)
+    }
+  }, [counter])
 
   // Show fail or success alert
   const showNotice = (type, onDoneNotice) => {
@@ -74,6 +85,7 @@ export function Board(props) {
   // Handle monster click
   const onMonsterAction = async (isMonster, timeout = false) => {
     let noticeType
+    setHasChoose(true)
 
     // On timeout, just lose a life
     if (timeout) {
@@ -90,8 +102,9 @@ export function Board(props) {
     }
 
     showNotice(noticeType, async () => {
+      stopCounter()
       const randomMonsters = await getRandomMonsters()
-      resetCounter()
+      initCounter()
       setMonsters(randomMonsters)
     })
   }
@@ -113,7 +126,11 @@ export function Board(props) {
             {counter === 0 ? (
               <>
                 <Col xs={12} lg={12}>
-                  <Counter duration={3} onTimeout={onMonsterAction} />
+                  <Counter
+                    duration={3}
+                    onTimeout={onMonsterAction}
+                    stopCounter={hasChoose}
+                  />
                 </Col>
                 <Monsters monsters={monsters} onClick={onMonsterAction} />
               </>

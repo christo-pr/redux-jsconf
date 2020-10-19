@@ -8,6 +8,8 @@ export function useCounter(duration, onTimeout) {
   const [active, setActive] = useState(true)
 
   const initTimer = () => {
+    clearInterval(timer)
+
     timer = setInterval(() => {
       setCounter((counter) => counter + 1)
     }, 1000)

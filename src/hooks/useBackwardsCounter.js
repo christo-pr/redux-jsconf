@@ -6,6 +6,7 @@ export function useBackwardsCounter(from) {
   const [counter, setCounter] = useState(from)
 
   const initCounter = () => {
+    setCounter(from)
     interval = setInterval(() => {
       setCounter((count) => count - 1)
     }, 1000)
@@ -20,9 +21,6 @@ export function useBackwardsCounter(from) {
   return {
     initCounter,
     counter,
-    resetCounter: () => {
-      setCounter(from)
-      initCounter()
-    },
+    stopCounter: () => clearInterval(interval),
   }
 }
