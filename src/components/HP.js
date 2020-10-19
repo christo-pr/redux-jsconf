@@ -5,12 +5,13 @@ import HeartEmpty from "assets/img/heart-empty.png"
 import { HPBar } from "styles/"
 
 export function HP(props) {
+  const { lifes } = props
   return (
     <HPBar>
       {new Array(3).fill().map((_, i) => (
         <img
           key={i}
-          src={i !== 2 ? HeartFull : HeartEmpty}
+          src={i + 1 <= lifes ? HeartFull : HeartEmpty}
           alt="Full"
           width={100}
         />

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import { useBackwardsCounter } from "hooks/"
 import { GameBackground, GameCounter, Container, Row, Col } from "styles/"
@@ -12,16 +12,51 @@ function handleMouseMove(e) {
 
 export function Board(props) {
   const counter = useBackwardsCounter(3)
+  const [monsters, setMonsters] = useState([]) // Part of global state
+  const [lifes, setLifes] = useState(3)
+
+  // Fetch monsters
+  useEffect(() => {
+    async function fetchMonsters() {
+      const response = await fetch("/api/monsters")
+      const data = await response.json()
+      console.log("fetchMonsters -> data", data)
+      setMonsters(data)
+    }
+
+    fetchMonsters()
+  }, [])
+
+  useEffect(() => {
+    if (lifes === 0) {
+      alert("Opps you lose the game")
+      setLifes(3)
+    }
+  }, [lifes])
+
+  // Handle monster click
+  const onMonsterClick = isMonster => {
+    if (isMonster) {
+      alert("Yei!")
+    } else {
+      alert("Opp!")
+      setLifes(l => l - 1)
+    }
+  }
 
   return (
     <GameBackground onMouseMove={ev => handleMouseMove(ev)}>
       <Container>
         <Row>
           <Col xs={12} lg={12}>
-            <HP />
+            <HP lifes={lifes} />
           </Col>
         </Row>
-        {counter === 0 ? <Monsters /> : <GameCounter>{counter}</GameCounter>}
+        {counter === 0 ? (
+          <Monsters monsters={monsters} onClick={onMonsterClick} />
+        ) : (
+          <GameCounter>{counter}</GameCounter>
+        )}
         <Gun />
       </Container>
     </GameBackground>
