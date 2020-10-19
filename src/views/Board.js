@@ -10,8 +10,15 @@ function handleMouseMove(e) {
   pointer.setAttribute("style", "left:" + e.pageX + "px;")
 }
 
+// Fetch 4 random monsters
+async function getRandomMonsters() {
+  const response = await fetch("/api/monsters")
+  const data = await response.json()
+  return data
+}
+
 export function Board(props) {
-  const counter = useBackwardsCounter(3)
+  const { counter, resetCounter } = useBackwardsCounter(3)
   const [monsters, setMonsters] = useState([]) // Part of global state
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
@@ -19,10 +26,8 @@ export function Board(props) {
   // Fetch monsters
   useEffect(() => {
     async function fetchMonsters() {
-      const response = await fetch("/api/monsters")
-      const data = await response.json()
-      console.log("fetchMonsters -> data", data)
-      setMonsters(data)
+      const randomMonsters = await getRandomMonsters()
+      setMonsters(randomMonsters)
     }
 
     fetchMonsters()
@@ -36,11 +41,13 @@ export function Board(props) {
   }, [lifes])
 
   // Handle monster click
-  const onMonsterClick = (isMonster) => {
+  const onMonsterClick = async (isMonster) => {
     if (isMonster) {
-      alert("Yei!")
+      setScore((sc) => sc + 1)
+      resetCounter()
+      const randomMonsters = await getRandomMonsters()
+      setMonsters(randomMonsters)
     } else {
-      alert("Opp!")
       setLifes((l) => l - 1)
     }
   }
