@@ -26,7 +26,7 @@ async function getRandomMonsters() {
   return data
 }
 
-export function Board(props) {
+export function ReduxMonsters(props) {
   const { counter, initCounter, stopCounter } = useBackwardsCounter(3)
   const [monsters, setMonsters] = useState([]) // Part of global state
   const [lifes, setLifes] = useState(3) // Part of global state
