@@ -14,6 +14,8 @@ import { HP, Monsters, Gun, Score } from "components/"
 // Update Gun position
 function handleMouseMove(e) {
   const pointer = document.getElementsByClassName("shootgun")[0]
+  if (!pointer) return
+
   pointer.setAttribute("style", "left:" + e.pageX + "px;")
 }
 
@@ -46,6 +48,7 @@ export function Board(props) {
     if (lifes === 0) {
       alert("Opps you lose the game")
       setLifes(3)
+      setGameStart(false)
     }
   }, [lifes])
 
@@ -102,7 +105,7 @@ export function Board(props) {
         ) : (
           <Row>
             <Col xs={12}>
-              <StartButton />
+              <StartButton onClick={() => setGameStart(true)} />
             </Col>
           </Row>
         )}
