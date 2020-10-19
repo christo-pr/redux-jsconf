@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react"
 
 import { useBackwardsCounter } from "hooks/"
 import { fetchRandomMonsters } from "api"
-import { GameCounter, Container, Row, Col, StartButton } from "styles/"
-import { Scenario, HP, Monsters, Gun, Score, Alert, Counter } from "components/"
+import { GameCounter, Col } from "styles/"
+import {
+  Scenario,
+  Monsters,
+  Gun,
+  Alert,
+  Counter,
+  Stats,
+  StartGameButton,
+} from "components/"
 
 export function ReduxMonsters(props) {
   const { counter, initCounter, stopCounter } = useBackwardsCounter(3)
@@ -91,41 +99,28 @@ export function ReduxMonsters(props) {
   return (
     <Scenario>
       <Alert {...notice} />
-      <Container>
-        <Row>
-          <Col xs={12} lg={9}>
-            <Score score={score} />
-          </Col>
-          <Col xs={12} lg={3}>
-            <HP lifes={lifes} />
-          </Col>
-        </Row>
-        {gameStart ? (
-          <>
-            {counter === 0 ? (
-              <>
-                <Col xs={12} lg={12}>
-                  <Counter
-                    duration={3}
-                    onTimeout={onMonsterAction}
-                    stopCounter={hasChoose}
-                  />
-                </Col>
-                <Monsters monsters={monsters} onClick={onMonsterAction} />
-              </>
-            ) : (
-              <GameCounter>{counter}</GameCounter>
-            )}
-            <Gun />
-          </>
-        ) : (
-          <Row>
-            <Col xs={12}>
-              <StartButton onClick={() => setGameStart(true)} />
-            </Col>
-          </Row>
-        )}
-      </Container>
+      <Stats lifes={lifes} score={score} />
+      {gameStart ? (
+        <>
+          {counter === 0 ? (
+            <>
+              <Col xs={12} lg={12}>
+                <Counter
+                  duration={3}
+                  onTimeout={onMonsterAction}
+                  stopCounter={hasChoose}
+                />
+              </Col>
+              <Monsters monsters={monsters} onClick={onMonsterAction} />
+            </>
+          ) : (
+            <GameCounter>{counter}</GameCounter>
+          )}
+          <Gun />
+        </>
+      ) : (
+        <StartGameButton onGameStart={() => setGameStart(true)} />
+      )}
     </Scenario>
   )
 }

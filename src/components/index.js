@@ -1,4 +1,6 @@
 export * from "./Scenario"
+export * from "./Stats"
+export * from "./StartGameButton"
 export * from "./Counter"
 export * from "./HP"
 export * from "./Monsters"
