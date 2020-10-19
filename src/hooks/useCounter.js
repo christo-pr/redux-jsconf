@@ -10,7 +10,7 @@ export function useCounter(duration) {
   // Start timer
   useEffect(() => {
     timer = setInterval(() => {
-      setCounter((counter) => counter + 1)
+      setCounter(counter => counter + 1)
     }, 1000)
 
     return () => {
@@ -29,6 +29,6 @@ export function useCounter(duration) {
 
   return {
     counter,
-    active,
+    active
   }
 }
