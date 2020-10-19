@@ -1,34 +1,28 @@
 import React from "react"
 
 import { Col, MonstersLayout, StyledMonster } from "styles/"
+import { Counter } from "./Counter"
 
 export function Monsters(props) {
+  const { monsters, onClick } = props
+
   return (
     <MonstersLayout>
-      <Col xs={12} lg={3}>
-        <StyledMonster
-          src="https://via.placeholder.com/300x500"
-          alt="Monstruo"
-        />
+      <Col xs={12} lg={12}>
+        <Counter duration={3} />
       </Col>
-      <Col xs={12} lg={3}>
-        <StyledMonster
-          src="https://via.placeholder.com/300x500"
-          alt="Monstruo"
-        />
-      </Col>
-      <Col xs={12} lg={3}>
-        <StyledMonster
-          src="https://via.placeholder.com/300x500"
-          alt="Monstruo"
-        />
-      </Col>
-      <Col xs={12} lg={3}>
-        <StyledMonster
-          src="https://via.placeholder.com/300x500"
-          alt="Monstruo"
-        />
-      </Col>
+      {monsters.map(m => (
+        <Col
+          key={m.id}
+          xs={12}
+          lg={3}
+          onClick={() => {
+            onClick(m.isMonster)
+          }}
+        >
+          <StyledMonster src={m.image} alt={m.name} />
+        </Col>
+      ))}
     </MonstersLayout>
   )
 }
