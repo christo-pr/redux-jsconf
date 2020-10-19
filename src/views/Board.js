@@ -9,7 +9,7 @@ import {
   Col,
   StartButton,
 } from "styles/"
-import { HP, Monsters, Gun, Score } from "components/"
+import { HP, Monsters, Gun, Score, Alert } from "components/"
 
 // Update Gun position
 function handleMouseMove(e) {
@@ -32,6 +32,7 @@ export function Board(props) {
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
   const [gameStart, setGameStart] = useState(false) // Part of global state?
+  const [notice, setNotice] = useState({})
 
   // Fetch initial monsters
   useEffect(() => {
@@ -46,7 +47,7 @@ export function Board(props) {
   // Check Lifes
   useEffect(() => {
     if (lifes === 0) {
-      alert("Opps you lose the game")
+      setNotice({ type: "error", show: true })
       setLifes(3)
       setGameStart(false)
     }
@@ -55,31 +56,49 @@ export function Board(props) {
   // Start game
   useEffect(() => {
     if (gameStart) {
+      setScore(0)
+      setNotice({ show: false })
       initCounter()
     }
   }, [gameStart])
 
+  // Show fail or success alert
+  const showNotice = (type, onDoneNotice) => {
+    setNotice({ type, show: true })
+    setTimeout(() => {
+      onDoneNotice()
+      setNotice({ show: false })
+    }, 1000)
+  }
+
   // Handle monster click
   const onMonsterAction = async (isMonster, timeout = false) => {
     const randomMonsters = await getRandomMonsters()
+    let noticeType
 
     // On timeout, just lose a life
     if (timeout) {
       setLifes((l) => l - 1)
+      noticeType = "error"
     } else {
       if (isMonster) {
         setScore((sc) => sc + 1)
+        noticeType = "success"
       } else {
         setLifes((l) => l - 1)
+        noticeType = "error"
       }
     }
 
-    resetCounter()
-    setMonsters(randomMonsters)
+    showNotice(noticeType, () => {
+      resetCounter()
+      setMonsters(randomMonsters)
+    })
   }
 
   return (
     <GameBackground onMouseMove={(ev) => handleMouseMove(ev)}>
+      <Alert {...notice} />
       <Container>
         <Row>
           <Col xs={12} lg={9}>
