@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react"
 
 import { useBackwardsCounter } from "hooks/"
-import { GameBackground, GameCounter, Container, Row, Col } from "styles/"
+import {
+  GameBackground,
+  GameCounter,
+  Container,
+  Row,
+  Col,
+  StartButton,
+} from "styles/"
 import { HP, Monsters, Gun, Score } from "components/"
 
 // Update Gun position
@@ -18,12 +25,13 @@ async function getRandomMonsters() {
 }
 
 export function Board(props) {
-  const { counter, resetCounter } = useBackwardsCounter(3)
+  const { counter, resetCounter, initCounter } = useBackwardsCounter(3)
   const [monsters, setMonsters] = useState([]) // Part of global state
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
+  const [gameStart, setGameStart] = useState(false) // Part of global state?
 
-  // Fetch monsters
+  // Fetch initial monsters
   useEffect(() => {
     async function fetchMonsters() {
       const randomMonsters = await getRandomMonsters()
@@ -33,6 +41,7 @@ export function Board(props) {
     fetchMonsters()
   }, [])
 
+  // Check Lifes
   useEffect(() => {
     if (lifes === 0) {
       alert("Opps you lose the game")
@@ -40,16 +49,30 @@ export function Board(props) {
     }
   }, [lifes])
 
-  // Handle monster click
-  const onMonsterClick = async (isMonster) => {
-    if (isMonster) {
-      setScore((sc) => sc + 1)
-      resetCounter()
-      const randomMonsters = await getRandomMonsters()
-      setMonsters(randomMonsters)
-    } else {
-      setLifes((l) => l - 1)
+  // Start game
+  useEffect(() => {
+    if (gameStart) {
+      initCounter()
     }
+  }, [gameStart])
+
+  // Handle monster click
+  const onMonsterAction = async (isMonster, timeout = false) => {
+    const randomMonsters = await getRandomMonsters()
+
+    // On timeout, just lose a life
+    if (timeout) {
+      setLifes((l) => l - 1)
+    } else {
+      if (isMonster) {
+        setScore((sc) => sc + 1)
+      } else {
+        setLifes((l) => l - 1)
+      }
+    }
+
+    resetCounter()
+    setMonsters(randomMonsters)
   }
 
   return (
@@ -63,12 +86,26 @@ export function Board(props) {
             <HP lifes={lifes} />
           </Col>
         </Row>
-        {counter === 0 ? (
-          <Monsters monsters={monsters} onClick={onMonsterClick} />
+        {gameStart ? (
+          <>
+            {counter === 0 ? (
+              <Monsters
+                monsters={monsters}
+                onClick={onMonsterAction}
+                onTimeout={onMonsterAction}
+              />
+            ) : (
+              <GameCounter>{counter}</GameCounter>
+            )}
+            <Gun />
+          </>
         ) : (
-          <GameCounter>{counter}</GameCounter>
+          <Row>
+            <Col xs={12}>
+              <StartButton />
+            </Col>
+          </Row>
         )}
-        <Gun />
       </Container>
     </GameBackground>
   )

@@ -3,14 +3,14 @@ import { useState, useEffect } from "react"
 // Counter timer
 var timer
 
-export function useCounter(duration) {
+export function useCounter(duration, onTimeout) {
   const [counter, setCounter] = useState(0)
   const [active, setActive] = useState(true)
 
   // Start timer
   useEffect(() => {
     timer = setInterval(() => {
-      setCounter(counter => counter + 1)
+      setCounter((counter) => counter + 1)
     }, 1000)
 
     return () => {
@@ -21,6 +21,7 @@ export function useCounter(duration) {
   // Stop timer
   useEffect(() => {
     if (counter > duration) {
+      onTimeout(null, true)
       setCounter(0)
       setActive(false)
       clearInterval(timer)
@@ -29,6 +30,6 @@ export function useCounter(duration) {
 
   return {
     counter,
-    active
+    active,
   }
 }

@@ -12,20 +12,13 @@ export function useBackwardsCounter(from) {
   }
 
   useEffect(() => {
-    initCounter()
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
-  useEffect(() => {
     if (counter === 0) {
       clearInterval(interval)
     }
   }, [counter])
 
   return {
+    initCounter,
     counter,
     resetCounter: () => {
       setCounter(from)
