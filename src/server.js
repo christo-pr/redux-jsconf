@@ -43,8 +43,8 @@ export default function fakeServer() {
     routes() {
       this.namespace = "api"
 
-      // GET Expenses
-      this.get("/monsters", (schema, request) => {
+      // GET monsters
+      this.get("/monsters", schema => {
         const allMonsters = schema.monsters.all()
         return randomIdsFromList(4, allMonsters.length).map(
           id => allMonsters.models[id]
@@ -53,7 +53,7 @@ export default function fakeServer() {
     },
 
     seeds(server) {
-      // 10 expenses
+      // 20 monsters
       server.createList("monster", 20)
 
       // seed the in-memory database
