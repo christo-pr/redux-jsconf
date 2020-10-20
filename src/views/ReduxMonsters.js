@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 
 import { useBackwardsCounter } from "hooks/"
 import { fetchRandomMonsters } from "api"
@@ -73,34 +73,37 @@ export function ReduxMonsters(props) {
   }
 
   // Handle monster click
-  const onMonsterAction = async (isMonster, timeout = false) => {
-    let noticeType
-    setShot(true)
+  const onMonsterAction = useCallback(
+    (isMonster, timeout = false) => {
+      let noticeType
+      setShot(true)
 
-    // On timeout, just lose a life
-    if (timeout) {
-      setLifes((l) => l - 1)
-      noticeType = "error"
-    } else {
-      if (isMonster) {
-        setScore((sc) => sc + 1)
-        noticeType = "success"
-      } else {
+      // On timeout, just lose a life
+      if (timeout) {
         setLifes((l) => l - 1)
         noticeType = "error"
+      } else {
+        if (isMonster) {
+          setScore((sc) => sc + 1)
+          noticeType = "success"
+        } else {
+          setLifes((l) => l - 1)
+          noticeType = "error"
+        }
       }
-    }
 
-    showAlert(noticeType, async () => {
-      stopCounter()
+      showAlert(noticeType, async () => {
+        stopCounter()
 
-      // Reset the counter when we still have lifes
-      if (lifes !== 1) initCounter()
+        // Reset the counter when we still have lifes
+        if (lifes !== 0) initCounter()
 
-      const randomMonsters = await fetchRandomMonsters()
-      setMonsters(randomMonsters)
-    })
-  }
+        const randomMonsters = await fetchRandomMonsters()
+        setMonsters(randomMonsters)
+      })
+    },
+    [lifes]
+  )
 
   return (
     <Scenario>

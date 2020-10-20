@@ -21,21 +21,23 @@ const factories = {
       return `Mounstro-${id}`
     },
     image(id) {
-      return `https://via.placeholder.com/300x500?text=Monster-${id}`
+      // return `https://via.placeholder.com/300x500?text=Monster-${id}`
+      const type = id % 3 === 0 ? "set2" : "set4"
+      return `https://robohash.org/${id}?set=${type}`
     },
     score() {
       return Math.floor(Math.random() * (5 - 2)) + 1
     },
     isMonster(id) {
-      return id % 2 === 0
-    }
-  })
+      return id % 3 === 0
+    },
+  }),
 }
 
 export default function fakeServer() {
   new Server({
     models: {
-      monster: Model
+      monster: Model,
     },
 
     factories: factories,
@@ -44,10 +46,10 @@ export default function fakeServer() {
       this.namespace = "api"
 
       // GET monsters
-      this.get("/monsters", schema => {
+      this.get("/monsters", (schema) => {
         const allMonsters = schema.monsters.all()
         return randomIdsFromList(4, allMonsters.length).map(
-          id => allMonsters.models[id]
+          (id) => allMonsters.models[id]
         )
       })
     },
@@ -58,6 +60,6 @@ export default function fakeServer() {
 
       // seed the in-memory database
       server.db.dump()
-    }
+    },
   })
 }

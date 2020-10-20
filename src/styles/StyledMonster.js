@@ -8,6 +8,8 @@ export const StyledMonster = styled.img`
   border: 10px solid;
   border-image-source: linear-gradient(45deg, #1f1f1f, #666);
   border-image-slice: 1;
+  min-height: 500px;
+  background: white;
 
   &:hover {
     cursor: url(${Cursor2}), auto;
