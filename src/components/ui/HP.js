@@ -12,7 +12,7 @@ export function HP(props) {
         <img
           key={i}
           src={i + 1 <= lifes ? HeartFull : HeartEmpty}
-          alt="Full"
+          alt="Health"
           width={100}
         />
       ))}

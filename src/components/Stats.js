@@ -1,8 +1,8 @@
 import React from "react"
 
 import { Row, Col } from "styles/"
-import { Score } from "./Score"
-import { HP } from "./HP"
+import { Score } from "./ui/Score"
+import { HP } from "./ui/HP"
 
 export function Stats(props) {
   const { lifes, score } = props
