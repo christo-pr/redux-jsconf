@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 
-import { StyledCounter } from "styles/"
+import { StyledCounter, Col } from "styles/"
 import { useCounter } from "hooks/"
 
-export function Counter(props) {
+export function RoundCounter(props) {
   const { duration, onTimeout, stopCounter } = props
   const { counter, active, initTimer, stopTimer } = useCounter(
     duration,
@@ -18,5 +18,9 @@ export function Counter(props) {
     }
   }, [stopCounter])
 
-  return <StyledCounter active={active}>{counter}</StyledCounter>
+  return (
+    <Col>
+      <StyledCounter active={active}>{counter}</StyledCounter>
+    </Col>
+  )
 }

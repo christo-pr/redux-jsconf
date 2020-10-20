@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react"
 
 import { useBackwardsCounter } from "hooks/"
 import { fetchRandomMonsters } from "api"
-import { GameCounter, Col } from "styles/"
 import {
   Scenario,
   Monsters,
   Gun,
   Alert,
-  Counter,
+  RoundCounter,
+  GameCounter,
   Stats,
   StartGameButton,
 } from "components/"
 
 export function ReduxMonsters(props) {
-  const { counter, initCounter, stopCounter } = useBackwardsCounter(3)
+  const DEFAULT_GAME_COUNTER = 3
+  const { counter, initCounter, stopCounter } = useBackwardsCounter(
+    DEFAULT_GAME_COUNTER
+  )
   const [monsters, setMonsters] = useState([]) // Part of global state
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
-  const [gameStart, setGameStart] = useState(false) // Part of global state?
+  const [gameStarted, setGameStarted] = useState(false) // Part of global state?
   const [hasChoose, setHasChoose] = useState(false) // Part of global state?
   const [notice, setNotice] = useState({}) // Part of global state?
 
@@ -37,25 +40,25 @@ export function ReduxMonsters(props) {
     if (lifes === 0) {
       setNotice({ type: "error", show: true })
       setLifes(3)
-      setGameStart(false)
+      setGameStarted(false)
       stopCounter()
     }
   }, [lifes])
 
   // Start game
   useEffect(() => {
-    if (gameStart) {
+    if (gameStarted) {
       setNotice({ show: false })
       setHasChoose(false)
       setScore(0)
       initCounter()
     }
-  }, [gameStart])
+  }, [gameStarted])
 
   // Reset user choose state
   useEffect(() => {
     // Only when counter has its value reset
-    if (counter === 3) {
+    if (counter === DEFAULT_GAME_COUNTER) {
       setHasChoose(false)
     }
   }, [counter])
@@ -90,8 +93,8 @@ export function ReduxMonsters(props) {
 
     showNotice(noticeType, async () => {
       stopCounter()
-      const randomMonsters = await fetchRandomMonsters()
       initCounter()
+      const randomMonsters = await fetchRandomMonsters()
       setMonsters(randomMonsters)
     })
   }
@@ -100,26 +103,24 @@ export function ReduxMonsters(props) {
     <Scenario>
       <Alert {...notice} />
       <Stats lifes={lifes} score={score} />
-      {gameStart ? (
+      {gameStarted ? (
         <>
           {counter === 0 ? (
             <>
-              <Col xs={12} lg={12}>
-                <Counter
-                  duration={3}
-                  onTimeout={onMonsterAction}
-                  stopCounter={hasChoose}
-                />
-              </Col>
+              <RoundCounter
+                duration={3}
+                onTimeout={onMonsterAction}
+                stopCounter={hasChoose}
+              />
               <Monsters monsters={monsters} onClick={onMonsterAction} />
             </>
           ) : (
-            <GameCounter>{counter}</GameCounter>
+            <GameCounter counter={counter} />
           )}
           <Gun />
         </>
       ) : (
-        <StartGameButton onGameStart={() => setGameStart(true)} />
+        <StartGameButton onGameStart={() => setGameStarted(true)} />
       )}
     </Scenario>
   )
