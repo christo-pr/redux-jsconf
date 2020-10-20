@@ -21,6 +21,9 @@ export function useBackwardsCounter(from) {
   return {
     initCounter,
     counter,
-    stopCounter: () => clearInterval(interval),
+    stopCounter: () => {
+      clearInterval(interval)
+      setCounter(from)
+    },
   }
 }

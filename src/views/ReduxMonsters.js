@@ -93,7 +93,10 @@ export function ReduxMonsters(props) {
 
     showAlert(noticeType, async () => {
       stopCounter()
-      initCounter()
+
+      // Reset the counter when we still have lifes
+      if (lifes !== 1) initCounter()
+
       const randomMonsters = await fetchRandomMonsters()
       setMonsters(randomMonsters)
     })
