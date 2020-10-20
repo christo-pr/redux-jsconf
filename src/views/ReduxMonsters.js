@@ -22,8 +22,8 @@ export function ReduxMonsters(props) {
   const [lifes, setLifes] = useState(3) // Part of global state
   const [score, setScore] = useState(0) // Part of global state
   const [gameStarted, setGameStarted] = useState(false) // Part of global state?
-  const [hasChoose, setHasChoose] = useState(false) // Part of global state?
-  const [notice, setNotice] = useState({}) // Part of global state?
+  const [shot, setShot] = useState(false) // Part of global state?
+  const [alert, setAlert] = useState({}) // Part of global state?
 
   // Fetch initial monsters
   useEffect(() => {
@@ -38,7 +38,7 @@ export function ReduxMonsters(props) {
   // Check Lifes
   useEffect(() => {
     if (lifes === 0) {
-      setNotice({ type: "error", show: true })
+      setAlert({ type: "error", show: true })
       setLifes(3)
       setGameStarted(false)
       stopCounter()
@@ -48,8 +48,8 @@ export function ReduxMonsters(props) {
   // Start game
   useEffect(() => {
     if (gameStarted) {
-      setNotice({ show: false })
-      setHasChoose(false)
+      setAlert({ show: false })
+      setShot(false)
       setScore(0)
       initCounter()
     }
@@ -59,23 +59,23 @@ export function ReduxMonsters(props) {
   useEffect(() => {
     // Only when counter has its value reset
     if (counter === DEFAULT_GAME_COUNTER) {
-      setHasChoose(false)
+      setShot(false)
     }
   }, [counter])
 
   // Show fail or success alert
-  const showNotice = (type, onDoneNotice) => {
-    setNotice({ type, show: true })
+  const showAlert = (type, onDoneNotice) => {
+    setAlert({ type, show: true })
     setTimeout(() => {
       onDoneNotice()
-      setNotice({ show: false })
-    }, 2000)
+      setAlert({ show: false })
+    }, 1000)
   }
 
   // Handle monster click
   const onMonsterAction = async (isMonster, timeout = false) => {
     let noticeType
-    setHasChoose(true)
+    setShot(true)
 
     // On timeout, just lose a life
     if (timeout) {
@@ -91,7 +91,7 @@ export function ReduxMonsters(props) {
       }
     }
 
-    showNotice(noticeType, async () => {
+    showAlert(noticeType, async () => {
       stopCounter()
       initCounter()
       const randomMonsters = await fetchRandomMonsters()
@@ -101,7 +101,7 @@ export function ReduxMonsters(props) {
 
   return (
     <Scenario>
-      <Alert {...notice} />
+      <Alert {...alert} />
       <Stats lifes={lifes} score={score} />
       {gameStarted ? (
         <>
@@ -110,7 +110,7 @@ export function ReduxMonsters(props) {
               <RoundCounter
                 duration={3}
                 onTimeout={onMonsterAction}
-                stopCounter={hasChoose}
+                stopCounter={shot}
               />
               <Monsters monsters={monsters} onClick={onMonsterAction} />
             </>
