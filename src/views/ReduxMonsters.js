@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 
 import {
@@ -41,10 +41,13 @@ const ReduxMonsters = (props) => {
     resetGame,
     startGame,
   } = props
-  const { counter, initCounter, stopCounter } = useBackwardsCounter(
-    DEFAULT_GAME_COUNTER
-  )
-  const [showCounter, setShowCounter] = useState(counter > 0)
+
+  const {
+    counter,
+    showCounter,
+    initCounter,
+    stopCounter,
+  } = useBackwardsCounter(DEFAULT_GAME_COUNTER)
 
   // Fetch initial monsters
   useEffect(() => {
@@ -74,34 +77,21 @@ const ReduxMonsters = (props) => {
     }
   }, [gameStarted])
 
-  // Reset user choose state
-  useEffect(() => {
-    setShowCounter(counter > 0)
-    // Only when counter has its value reset
-    if (counter === DEFAULT_GAME_COUNTER) {
-    }
-  }, [counter])
-
   // Hide alert
   useEffect(() => {
     let alertTimeout
     if (alert.show) {
       alertTimeout = setTimeout(async () => {
-        nextTurn() // Remove the alert
+        nextTurn() // Call next turn on redux (cleanup)
 
-        if (lifes > 0) initCounter()
+        if (lifes > 0) initCounter() // Init the counter again when enought lifes
 
-        await getRandomMonsters()
+        await getRandomMonsters() // Fetch more random characters
       }, 1000)
     }
 
     return () => clearTimeout(alertTimeout)
   }, [alert, lifes])
-
-  const onTimeout = () => {
-    // Call timeout on redux
-    gameTimeout()
-  }
 
   // Handle monster click
   const onMonsterShot = (isMonster) => {
@@ -122,7 +112,7 @@ const ReduxMonsters = (props) => {
         <>
           <RoundCounter
             duration={3}
-            onTimeout={onTimeout}
+            onTimeout={gameTimeout}
             stopCounter={userHasShot}
           />
           <Monsters monsters={characters} onClick={onMonsterShot} />

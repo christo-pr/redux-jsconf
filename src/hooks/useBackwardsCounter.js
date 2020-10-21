@@ -4,6 +4,7 @@ var interval
 
 export function useBackwardsCounter(from) {
   const [counter, setCounter] = useState(from)
+  const [showCounter, setShowCounter] = useState(false)
 
   const initCounter = () => {
     setCounter(from)
@@ -13,6 +14,8 @@ export function useBackwardsCounter(from) {
   }
 
   useEffect(() => {
+    setShowCounter(counter > 0)
+
     if (counter <= 0) {
       clearInterval(interval)
     }
@@ -21,6 +24,7 @@ export function useBackwardsCounter(from) {
   return {
     initCounter,
     counter,
+    showCounter,
     stopCounter: () => {
       clearInterval(interval)
       setCounter(from)
