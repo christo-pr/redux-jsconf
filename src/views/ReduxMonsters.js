@@ -29,6 +29,7 @@ const ReduxMonsters = (props) => {
   const {
     characters,
     gameStarted,
+    userHasShot,
     alert,
     lifes,
     score,
@@ -43,7 +44,6 @@ const ReduxMonsters = (props) => {
   const { counter, initCounter, stopCounter } = useBackwardsCounter(
     DEFAULT_GAME_COUNTER
   )
-  const [shot, setShot] = useState(false) // Part of global state?
   const [showCounter, setShowCounter] = useState(counter > 0)
 
   // Fetch initial monsters
@@ -67,7 +67,6 @@ const ReduxMonsters = (props) => {
   // Start game
   useEffect(() => {
     if (gameStarted) {
-      setShot(false)
       initCounter()
     } else {
       resetGame()
@@ -80,7 +79,6 @@ const ReduxMonsters = (props) => {
     setShowCounter(counter > 0)
     // Only when counter has its value reset
     if (counter === DEFAULT_GAME_COUNTER) {
-      setShot(false)
     }
   }, [counter])
 
@@ -103,13 +101,10 @@ const ReduxMonsters = (props) => {
   const onTimeout = () => {
     // Call timeout on redux
     gameTimeout()
-    setShot(true)
   }
 
   // Handle monster click
   const onMonsterShot = (isMonster) => {
-    setShot(true)
-
     if (isMonster) {
       shotSuccess(1) // TODO: Monster score
     } else {
@@ -125,7 +120,11 @@ const ReduxMonsters = (props) => {
       {showCounter && gameStarted && <GameCounter counter={counter} />}
       {!showCounter && (
         <>
-          <RoundCounter duration={3} onTimeout={onTimeout} stopCounter={shot} />
+          <RoundCounter
+            duration={3}
+            onTimeout={onTimeout}
+            stopCounter={userHasShot}
+          />
           <Monsters monsters={characters} onClick={onMonsterShot} />
         </>
       )}
@@ -139,6 +138,7 @@ const mapStateToProps = (state) => {
     gameStarted: state.game.gameStarted,
     alert: state.game.alert,
     lifes: state.game.lifes,
+    userHasShot: state.game.userHasShot,
     score: state.game.score,
     characters: state.characters.chars,
   }
