@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react"
+import { connect } from "react-redux"
 
+import {
+  incrementScore,
+  resetScore,
+  resetLifes,
+  decrementLife,
+} from "store/actions"
 import { useBackwardsCounter } from "hooks/"
 import { fetchRandomMonsters } from "api"
 import {
@@ -13,14 +20,23 @@ import {
   StartGameButton,
 } from "components/"
 
-export function ReduxMonsters(props) {
-  const DEFAULT_GAME_COUNTER = 3
+const DEFAULT_GAME_COUNTER = 3
+
+const ReduxMonsters = (props) => {
+  const {
+    lifes,
+    score,
+    incrementScore,
+    resetScore,
+    resetLifes,
+    decrementLife,
+  } = props
   const { counter, initCounter, stopCounter } = useBackwardsCounter(
     DEFAULT_GAME_COUNTER
   )
   const [monsters, setMonsters] = useState([]) // Part of global state
-  const [lifes, setLifes] = useState(3) // Part of global state
-  const [score, setScore] = useState(0) // Part of global state
+  // const [lifes, setLifes] = useState(3) // Part of global state
+  // const [score, setScore] = useState(0) // Part of global state
   const [gameStarted, setGameStarted] = useState(false) // Part of global state?
   const [shot, setShot] = useState(false) // Part of global state?
   const [alert, setAlert] = useState({}) // Part of global state?
@@ -39,7 +55,8 @@ export function ReduxMonsters(props) {
   useEffect(() => {
     if (lifes === 0) {
       setAlert({ type: "error", show: true })
-      setLifes(3)
+      // setLifes(3)
+      resetLifes()
       setGameStarted(false)
       stopCounter()
     }
@@ -50,7 +67,8 @@ export function ReduxMonsters(props) {
     if (gameStarted) {
       setAlert({ show: false })
       setShot(false)
-      setScore(0)
+      // setScore(0)
+      resetScore(0)
       initCounter()
     }
   }, [gameStarted])
@@ -80,14 +98,17 @@ export function ReduxMonsters(props) {
 
       // On timeout, just lose a life
       if (timeout) {
-        setLifes((l) => l - 1)
+        // setLifes((l) => l - 1)
+        decrementLife()
         noticeType = "error"
       } else {
         if (isMonster) {
-          setScore((sc) => sc + 1)
+          // setScore((sc) => sc + 1)
+          incrementScore()
           noticeType = "success"
         } else {
-          setLifes((l) => l - 1)
+          // setLifes((l) => l - 1)
+          decrementLife()
           noticeType = "error"
         }
       }
@@ -131,3 +152,19 @@ export function ReduxMonsters(props) {
     </Scenario>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    lifes: state.game.lifes,
+    score: state.game.score,
+  }
+}
+
+const mapDispatchToProps = {
+  incrementScore,
+  resetScore,
+  resetLifes,
+  decrementLife,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxMonsters)

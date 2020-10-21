@@ -1,4 +1,9 @@
-import { DECREMENT_LIFE, INCREMENT_SCORE } from "./actions"
+import {
+  DECREMENT_LIFE,
+  RESET_LIFES,
+  INCREMENT_SCORE,
+  RESET_SCORE,
+} from "./types"
 
 const initialState = {
   lifes: 3,
@@ -12,12 +17,22 @@ export default function gameReducer(state = initialState, action) {
     case DECREMENT_LIFE:
       return {
         ...state,
-        lifes: state.life - 1,
+        lifes: state.lifes - 1,
+      }
+    case RESET_LIFES:
+      return {
+        ...state,
+        lifes: 3,
       }
     case INCREMENT_SCORE:
       return {
         ...state,
         score: state.score + 1,
+      }
+    case RESET_SCORE:
+      return {
+        ...state,
+        score: payload,
       }
     default:
       return state
