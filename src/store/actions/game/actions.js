@@ -3,12 +3,17 @@ import {
   SHOT_FAIL,
   SHOT_SUCCESS,
   RESET_GAME,
+  NEXT_TURN,
   START_GAME,
 } from "./types"
 
 // ACTIONS
 export const startGame = () => ({
   type: START_GAME,
+})
+
+export const nextTurn = () => ({
+  type: NEXT_TURN,
 })
 
 export const gameTimeout = () => ({

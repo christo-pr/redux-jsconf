@@ -2,14 +2,16 @@ import {
   TIMEOUT,
   SHOT_FAIL,
   SHOT_SUCCESS,
+  NEXT_TURN,
   RESET_GAME,
   START_GAME,
-} from "../../actions/"
+} from "store/actions/"
 
 const initialState = {
   lifes: 3,
   score: 0,
   gameStarted: false,
+  alert: { type: "", show: false },
 }
 
 export function gameReducer(state = initialState, action) {
@@ -21,11 +23,18 @@ export function gameReducer(state = initialState, action) {
       return {
         ...state,
         lifes: state.lifes - 1,
+        alert: { type: "error", show: true },
       }
     case SHOT_SUCCESS:
       return {
         ...state,
         score: state.score + payload.points,
+        alert: { type: "success", show: true },
+      }
+    case NEXT_TURN:
+      return {
+        ...state,
+        alert: { type: "", show: false },
       }
     case RESET_GAME:
       return initialState
@@ -33,6 +42,7 @@ export function gameReducer(state = initialState, action) {
       return {
         ...state,
         gameStarted: true,
+        alert: { type: "", show: false },
       }
     default:
       return state
