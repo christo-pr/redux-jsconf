@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 
 import {
@@ -100,11 +100,11 @@ const ReduxMonsters = (props) => {
     return () => clearTimeout(alertTimeout)
   }, [alert, lifes])
 
-  const onTimeout = useCallback(() => {
+  const onTimeout = () => {
     // Call timeout on redux
     gameTimeout()
     setShot(true)
-  }, [lifes])
+  }
 
   // Handle monster click
   const onMonsterShot = (isMonster) => {
