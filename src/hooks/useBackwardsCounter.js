@@ -13,7 +13,7 @@ export function useBackwardsCounter(from) {
   }
 
   useEffect(() => {
-    if (counter === 0) {
+    if (counter <= 0) {
       clearInterval(interval)
     }
   }, [counter])

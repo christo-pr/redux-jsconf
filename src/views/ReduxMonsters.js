@@ -2,11 +2,13 @@ import React, { useEffect, useState, useCallback } from "react"
 import { connect } from "react-redux"
 
 import {
-  incrementScore,
-  resetScore,
-  resetLifes,
-  decrementLife,
+  gameTimeout,
+  shotFail,
+  shotSuccess,
+  resetGame,
+  startGame,
 } from "store/actions"
+
 import { useBackwardsCounter } from "hooks/"
 import { fetchRandomMonsters } from "api"
 import {
@@ -24,20 +26,19 @@ const DEFAULT_GAME_COUNTER = 3
 
 const ReduxMonsters = (props) => {
   const {
+    gameStarted,
     lifes,
     score,
-    incrementScore,
-    resetScore,
-    resetLifes,
-    decrementLife,
+    gameTimeout,
+    shotFail,
+    shotSuccess,
+    resetGame,
+    startGame,
   } = props
   const { counter, initCounter, stopCounter } = useBackwardsCounter(
     DEFAULT_GAME_COUNTER
   )
   const [monsters, setMonsters] = useState([]) // Part of global state
-  // const [lifes, setLifes] = useState(3) // Part of global state
-  // const [score, setScore] = useState(0) // Part of global state
-  const [gameStarted, setGameStarted] = useState(false) // Part of global state?
   const [shot, setShot] = useState(false) // Part of global state?
   const [alert, setAlert] = useState({}) // Part of global state?
 
@@ -56,8 +57,7 @@ const ReduxMonsters = (props) => {
     if (lifes === 0) {
       setAlert({ type: "error", show: true })
       // setLifes(3)
-      resetLifes()
-      setGameStarted(false)
+      resetGame()
       stopCounter()
     }
   }, [lifes])
@@ -67,8 +67,6 @@ const ReduxMonsters = (props) => {
     if (gameStarted) {
       setAlert({ show: false })
       setShot(false)
-      // setScore(0)
-      resetScore(0)
       initCounter()
     }
   }, [gameStarted])
@@ -90,41 +88,45 @@ const ReduxMonsters = (props) => {
     }, 1000)
   }
 
+  const onTimeout = useCallback(() => {
+    // Call timeout on redux
+    gameTimeout()
+    setShot(true)
+
+    showAlert("error", async () => {
+      if (lifes === 0) return
+
+      initCounter()
+
+      const randomMonsters = await fetchRandomMonsters()
+      setMonsters(randomMonsters)
+    })
+  }, [lifes])
+
   // Handle monster click
-  const onMonsterAction = useCallback(
-    (isMonster, timeout = false) => {
-      let noticeType
-      setShot(true)
+  const onMonsterShot = (isMonster) => {
+    let noticeType
+    setShot(true)
 
-      // On timeout, just lose a life
-      if (timeout) {
-        // setLifes((l) => l - 1)
-        decrementLife()
-        noticeType = "error"
-      } else {
-        if (isMonster) {
-          // setScore((sc) => sc + 1)
-          incrementScore()
-          noticeType = "success"
-        } else {
-          // setLifes((l) => l - 1)
-          decrementLife()
-          noticeType = "error"
-        }
-      }
+    if (isMonster) {
+      // setScore((sc) => sc + 1)
+      shotSuccess(1) // TODO: Monster score
+      noticeType = "success"
+    } else {
+      // setLifes((l) => l - 1)
+      shotFail()
+      noticeType = "error"
+    }
 
-      showAlert(noticeType, async () => {
-        stopCounter()
+    showAlert(noticeType, async () => {
+      if (lifes === 0) return
 
-        // Reset the counter when we still have lifes
-        if (lifes !== 0) initCounter()
+      initCounter()
 
-        const randomMonsters = await fetchRandomMonsters()
-        setMonsters(randomMonsters)
-      })
-    },
-    [lifes]
-  )
+      const randomMonsters = await fetchRandomMonsters()
+      setMonsters(randomMonsters)
+    })
+  }
 
   return (
     <Scenario>
@@ -136,10 +138,10 @@ const ReduxMonsters = (props) => {
             <>
               <RoundCounter
                 duration={3}
-                onTimeout={onMonsterAction}
+                onTimeout={onTimeout}
                 stopCounter={shot}
               />
-              <Monsters monsters={monsters} onClick={onMonsterAction} />
+              <Monsters monsters={monsters} onClick={onMonsterShot} />
             </>
           ) : (
             <GameCounter counter={counter} />
@@ -147,7 +149,7 @@ const ReduxMonsters = (props) => {
           <Gun />
         </>
       ) : (
-        <StartGameButton onGameStart={() => setGameStarted(true)} />
+        <StartGameButton onGameStart={() => startGame()} />
       )}
     </Scenario>
   )
@@ -155,16 +157,18 @@ const ReduxMonsters = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    gameStarted: state.game.gameStarted,
     lifes: state.game.lifes,
     score: state.game.score,
   }
 }
 
 const mapDispatchToProps = {
-  incrementScore,
-  resetScore,
-  resetLifes,
-  decrementLife,
+  gameTimeout,
+  shotFail,
+  shotSuccess,
+  resetGame,
+  startGame,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxMonsters)
