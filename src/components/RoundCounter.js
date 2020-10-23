@@ -5,10 +5,7 @@ import { useCounter } from "hooks/"
 
 export function RoundCounter(props) {
   const { duration, onTimeout, stopCounter } = props
-  const { counter, active, initTimer, stopTimer } = useCounter(
-    duration,
-    onTimeout
-  )
+  const { counter, initTimer, stopTimer } = useCounter(duration, onTimeout)
 
   useEffect(() => {
     if (stopCounter) {
@@ -20,7 +17,7 @@ export function RoundCounter(props) {
 
   return (
     <Col>
-      <StyledCounter active={active}>
+      <StyledCounter>
         <p>{counter}</p>
       </StyledCounter>
     </Col>

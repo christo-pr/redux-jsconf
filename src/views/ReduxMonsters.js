@@ -60,10 +60,10 @@ const ReduxMonsters = (props) => {
 
   // Check Lifes
   useEffect(() => {
-    if (lifes - 1 < 0) {
+    if (lifes === 0) {
       resetGame()
       stopCounter()
-      window.alert("Game Lost")
+      window.alert("Game Over!")
     }
   }, [lifes])
 
@@ -102,23 +102,32 @@ const ReduxMonsters = (props) => {
     }
   }
 
+  // Render <GameCounter /> or monster list
+  const renderGame = () => {
+    if (showCounter) return <GameCounter counter={counter} />
+
+    return (
+      <>
+        <RoundCounter
+          duration={3}
+          onTimeout={gameTimeout}
+          stopCounter={userHasShot}
+        />
+        <Monsters monsters={characters} onClick={onMonsterShot} />
+      </>
+    )
+  }
+
   return (
     <Scenario>
       <Alert {...alert} />
       <Stats lifes={lifes} score={score} />
-      {!gameStarted && <StartGameButton onGameStart={() => startGame()} />}
-      {showCounter && gameStarted && <GameCounter counter={counter} />}
-      {!showCounter && (
-        <>
-          <RoundCounter
-            duration={3}
-            onTimeout={gameTimeout}
-            stopCounter={userHasShot}
-          />
-          <Monsters monsters={characters} onClick={onMonsterShot} />
-        </>
+      <Gun />
+      {gameStarted ? (
+        renderGame()
+      ) : (
+        <StartGameButton onGameStart={() => startGame()} />
       )}
-      {gameStarted && <Gun />}
     </Scenario>
   )
 }
