@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/redux-jsconf/static/css/main.ca0b0216.chunk.css",
+    "main.js": "/redux-jsconf/static/js/main.29e94ac8.chunk.js",
+    "main.js.map": "/redux-jsconf/static/js/main.29e94ac8.chunk.js.map",
+    "runtime-main.js": "/redux-jsconf/static/js/runtime-main.6f2c14b6.js",
+    "runtime-main.js.map": "/redux-jsconf/static/js/runtime-main.6f2c14b6.js.map",
+    "static/css/2.764ccc25.chunk.css": "/redux-jsconf/static/css/2.764ccc25.chunk.css",
+    "static/js/2.eed7a9ee.chunk.js": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js",
+    "static/js/2.eed7a9ee.chunk.js.map": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js.map",
+    "index.html": "/redux-jsconf/index.html",
+    "precache-manifest.d2de741f0ba56268215f5f46ea90c329.js": "/redux-jsconf/precache-manifest.d2de741f0ba56268215f5f46ea90c329.js",
+    "service-worker.js": "/redux-jsconf/service-worker.js",
+    "static/css/2.764ccc25.chunk.css.map": "/redux-jsconf/static/css/2.764ccc25.chunk.css.map",
+    "static/css/main.ca0b0216.chunk.css.map": "/redux-jsconf/static/css/main.ca0b0216.chunk.css.map",
+    "static/js/2.eed7a9ee.chunk.js.LICENSE.txt": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js.LICENSE.txt",
+    "static/media/PressStart2P-Regular.ttf": "/redux-jsconf/static/media/PressStart2P-Regular.2c404fd0.ttf",
+    "static/media/background-game.png": "/redux-jsconf/static/media/background-game.35ebd92b.png",
+    "static/media/heart-empty.png": "/redux-jsconf/static/media/heart-empty.dd662deb.png",
+    "static/media/heart-full.webp": "/redux-jsconf/static/media/heart-full.fbbe3f46.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6f2c14b6.js",
+    "static/css/2.764ccc25.chunk.css",
+    "static/js/2.eed7a9ee.chunk.js",
+    "static/css/main.ca0b0216.chunk.css",
+    "static/js/main.29e94ac8.chunk.js"
+  ]
+}
