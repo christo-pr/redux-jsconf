@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 
 import { StyledDuck } from "styles/"
-
-// 770px 225px - Duck uo
-// 660px 225px - Duck up wings open
-// 525px 225px - Duck up wings up
-// 785px 110px - Duck shot
-// 675px 110px - Duck falling
+import { random } from "utils"
 
 const sprite = {
   down: [785, 225],
@@ -18,6 +13,9 @@ const sprite = {
 let interval
 
 export function Duck(props) {
+  const [duckPosition] = useState(
+    random(0, document.documentElement.clientWidth - 150)
+  )
   const [duckSprite, setDuckSprite] = useState(sprite.down)
   const [duckShot, setDuckShot] = useState(false)
   const [shouldAnimate, setShouldAnimate] = useState(true)
@@ -68,6 +66,7 @@ export function Duck(props) {
       onAnimationEnd={onDuckGone}
       duckSprite={duckSprite}
       duckShot={duckShot}
+      duckPosition={duckPosition}
       shouldAnimate={shouldAnimate}
     />
   )
