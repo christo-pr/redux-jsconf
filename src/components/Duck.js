@@ -13,7 +13,7 @@ const sprite = {
 let animation
 
 export function Duck(props) {
-  const { onShot, points, id } = props
+  const { onShot, points, id, onShotMiss } = props
   const [duckPosition] = useState(
     random(0, document.documentElement.clientWidth - 150)
   )
@@ -44,6 +44,7 @@ export function Duck(props) {
 
   const onDuckGone = () => {
     clearInterval(animation)
+    onShotMiss()
   }
 
   const onDuckShot = () => {

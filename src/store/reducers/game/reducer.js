@@ -1,4 +1,4 @@
-import { SHOT, START_GAME } from "store/actions/"
+import { SHOT, START_GAME, SHOT_MISS, GAME_OVER } from "store/actions/"
 
 const initialState = {
   lifes: 3,
@@ -20,6 +20,13 @@ export function gameReducer(state = initialState, action) {
         ...initialState,
         gameStarted: true,
       }
+    case SHOT_MISS:
+      return {
+        ...state,
+        lifes: state.lifes - 1,
+      }
+    case GAME_OVER:
+      return initialState
     default:
       return state
   }

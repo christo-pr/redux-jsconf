@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 
-import { shot, startGame, showNewDuck } from "store/actions"
-
+import { shot, startGame, gameOver, showNewDuck, shotMiss } from "store/actions"
 import { Scenario, Gun, Stats, StartGameButton, Duck } from "components/"
 import { useEffect } from "react"
 
@@ -14,13 +13,29 @@ function ReducksHunt(props) {
     duck,
     showDuck,
     shot,
+    shotMiss,
     startGame,
+    gameOver,
     showNewDuck,
   } = props
 
+  useEffect(() => {
+    console.log("ReducksHunt -> lifes", lifes)
+    if (lifes === 0) {
+      gameOver()
+    }
+  }, [lifes])
+
   const onDuckShot = (duckPoints) => {
-    shot(duckPoints || 1)
-    console.log("onDuckShot -> duckPoints", duckPoints)
+    shot(duckPoints)
+    setTimeout(() => {
+      console.log("Duck Shot")
+      showNewDuck()
+    }, 1000)
+  }
+
+  const onDuckShotMissed = () => {
+    shotMiss()
     setTimeout(() => {
       console.log("Duck Gone")
       showNewDuck()
@@ -31,7 +46,9 @@ function ReducksHunt(props) {
     <Scenario>
       <Gun />
       <Stats score={score} lifes={lifes} />
-      {gameStarted && showDuck && <Duck onShot={onDuckShot} {...duck} />}
+      {gameStarted && showDuck && (
+        <Duck onShot={onDuckShot} onShotMiss={onDuckShotMissed} {...duck} />
+      )}
       {!gameStarted && <StartGameButton onGameStart={() => startGame()} />}
     </Scenario>
   )
@@ -49,7 +66,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   shot,
+  shotMiss,
   startGame,
+  gameOver,
   showNewDuck,
 }
 
