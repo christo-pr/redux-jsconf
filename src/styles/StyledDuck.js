@@ -12,7 +12,7 @@ export const StyledDuck = styled.div`
   z-index: 1;
   bottom: 0;
   left: ${(props) => props.duckPosition}px;
-  animation: bottomToTop 3s;
+  animation: bottomToTop 2s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;

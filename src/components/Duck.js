@@ -39,7 +39,7 @@ export function Duck(props) {
           s = 0
           break
       }
-    }, 300)
+    }, 100)
   }
 
   const onDuckGone = () => {

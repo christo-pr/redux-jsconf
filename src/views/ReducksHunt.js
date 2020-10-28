@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import { connect } from "react-redux"
 
 import { shot, startGame, gameOver, showNewDuck, shotMiss } from "store/actions"
 import { Scenario, Gun, Stats, StartGameButton, Duck } from "components/"
 import { useEffect } from "react"
+
+const TIMEOUT = 700
 
 function ReducksHunt(props) {
   const {
@@ -20,7 +22,6 @@ function ReducksHunt(props) {
   } = props
 
   useEffect(() => {
-    console.log("ReducksHunt -> lifes", lifes)
     if (lifes === 0) {
       gameOver()
     }
@@ -31,7 +32,7 @@ function ReducksHunt(props) {
     setTimeout(() => {
       console.log("Duck Shot")
       showNewDuck()
-    }, 1000)
+    }, TIMEOUT)
   }
 
   const onDuckShotMissed = () => {
@@ -39,7 +40,7 @@ function ReducksHunt(props) {
     setTimeout(() => {
       console.log("Duck Gone")
       showNewDuck()
-    }, 1000)
+    }, TIMEOUT)
   }
 
   return (
