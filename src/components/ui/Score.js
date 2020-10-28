@@ -4,7 +4,7 @@ import ScoreImg from "assets/img/score.png"
 import { StyledScore } from "styles/"
 
 export function Score(props) {
-  const { score } = props
+  const { score = 0 } = props
 
   return (
     <StyledScore>

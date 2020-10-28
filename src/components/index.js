@@ -3,6 +3,7 @@ export * from "./Monsters"
 export * from "./RoundCounter"
 export * from "./Scenario"
 export * from "./Stats"
+export * from "./Duck"
 
 // UI
 export * from "./ui/Alert"

@@ -16,7 +16,7 @@ export const StartButton = styled.button`
   background-position: center;
   background-size: contain;
   border: none;
-  height: 150px;
+  height: 200px;
 
   &:focus,
   &:active,
