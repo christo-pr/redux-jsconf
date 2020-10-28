@@ -46,11 +46,13 @@ function ReducksHunt(props) {
   return (
     <Scenario>
       <Gun />
-      <Stats score={score} lifes={lifes} />
+      <Stats lifes={lifes} />
       {gameStarted && showDuck && (
         <Duck onShot={onDuckShot} onShotMiss={onDuckShotMissed} {...duck} />
       )}
-      {!gameStarted && <StartGameButton onGameStart={() => startGame()} />}
+      {!gameStarted && (
+        <StartGameButton onGameStart={() => startGame()} score={score} />
+      )}
     </Scenario>
   )
 }

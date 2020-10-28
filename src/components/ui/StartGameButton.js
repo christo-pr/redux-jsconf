@@ -1,13 +1,14 @@
 import React from "react"
 
-import { Row, Col, StartButton } from "styles/"
+import { Row, Col, StartButton, StyledScore } from "styles/"
 
 export function StartGameButton(props) {
-  const { onGameStart } = props
+  const { onGameStart, score } = props
 
   return (
-    <Row>
-      <Col xs={12}>
+    <Row align="center" justify="center">
+      <Col xs={12} align="center">
+        <StyledScore>Puntaje: {score}</StyledScore>
         <StartButton onClick={onGameStart} />
       </Col>
     </Row>

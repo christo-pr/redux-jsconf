@@ -26,7 +26,11 @@ export function gameReducer(state = initialState, action) {
         lifes: state.lifes - 1,
       }
     case GAME_OVER:
-      return initialState
+      return {
+        ...state,
+        lifes: 3,
+        gameStarted: false,
+      }
     default:
       return state
   }
