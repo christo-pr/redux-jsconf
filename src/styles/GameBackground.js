@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import GameBackgroundImg from "assets/img/background-game.png"
 import DuckHuntBackground from "assets/img/duck-hunt-background.png"
 
 export const GameBackground = styled.div`

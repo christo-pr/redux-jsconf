@@ -10,7 +10,6 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      {/* <ReduxMonsters /> */}
       <ReducksHunt />
     </>
   )
