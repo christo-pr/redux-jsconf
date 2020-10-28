@@ -10,9 +10,10 @@ const sprite = {
   shot: [785, 110],
   fall: [675, 110],
 }
-let interval
+let animation
 
 export function Duck(props) {
+  const { onShot, points, id } = props
   const [duckPosition] = useState(
     random(0, document.documentElement.clientWidth - 150)
   )
@@ -22,7 +23,7 @@ export function Duck(props) {
 
   const animate = () => {
     let s = 0
-    interval = setInterval(() => {
+    animation = setInterval(() => {
       console.log("animate")
       switch (s) {
         case 0:
@@ -42,21 +43,22 @@ export function Duck(props) {
   }
 
   const onDuckGone = () => {
-    clearInterval(interval)
+    clearInterval(animation)
   }
 
   const onDuckShot = () => {
     setShouldAnimate(false)
     setDuckSprite(sprite.shot)
     setDuckShot(true)
-    clearInterval(interval)
+    clearInterval(animation)
+    onShot(points)
   }
 
   useEffect(() => {
     animate()
 
     return () => {
-      clearInterval(interval)
+      clearInterval(animation)
     }
   }, [])
 

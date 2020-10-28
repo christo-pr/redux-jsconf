@@ -1,2 +1,1 @@
-export { default as ReduxMonsters } from "./ReduxMonsters"
-export { ReducksHunt } from "./ReducksHunt"
+export { default as ReducksHunt } from "./ReducksHunt"

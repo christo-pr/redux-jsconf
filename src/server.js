@@ -4,9 +4,14 @@
  */
 import { Server, Model, Factory } from "miragejs"
 
-import { randomIdsFromList } from "./utils"
+import { randomIdsFromList, random } from "./utils"
 
 const factories = {
+  duck: Factory.extend({
+    points() {
+      return random(1, 3)
+    },
+  }),
   monster: Factory.extend({
     name(id) {
       return `Mounstro-${id}`
@@ -29,6 +34,7 @@ export default function fakeServer() {
   new Server({
     models: {
       monster: Model,
+      duck: Model,
     },
 
     factories: factories,
@@ -43,11 +49,19 @@ export default function fakeServer() {
           (id) => allMonsters.models[id]
         )
       })
+      // GET ducks
+      this.get("/duck", (schema) => {
+        const allDucks = schema.ducks.all()
+        return allDucks.models[random(0, allDucks.length)]
+      })
     },
 
     seeds(server) {
       // 20 monsters
       server.createList("monster", 20)
+
+      // 20 ducks
+      server.createList("duck", 20)
 
       // seed the in-memory database
       server.db.dump()
