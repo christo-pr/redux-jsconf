@@ -19,6 +19,13 @@ export const StyledDuck = styled.div`
   animation-play-state: ${(props) =>
     props.shouldAnimate ? "running" : "paused"};
 
+  span {
+    position: relative;
+    top: -2rem;
+    left: 3rem;
+    font-size: 20px;
+  }
+
   @keyframes bottomToTop {
     from {
       bottom: 0;

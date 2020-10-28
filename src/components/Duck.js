@@ -71,6 +71,8 @@ export function Duck(props) {
       duckShot={duckShot}
       duckPosition={duckPosition}
       shouldAnimate={shouldAnimate}
-    />
+    >
+      {duckShot && <span>{points}</span>}
+    </StyledDuck>
   )
 }
