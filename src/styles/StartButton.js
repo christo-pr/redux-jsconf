@@ -8,7 +8,6 @@ export const StartButton = styled.button`
   color: white;
   width: 100%;
   align-self: center;
-  margin-top: 20%;
   background: url(${ButtonImg});
   background-repeat: no-repeat;
   background-size: 500px;
@@ -16,7 +15,7 @@ export const StartButton = styled.button`
   background-position: center;
   background-size: contain;
   border: none;
-  height: 150px;
+  height: 200px;
 
   &:focus,
   &:active,

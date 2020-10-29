@@ -2,11 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from "redux"
 import { composeWithDevTools } from "redux-devtools-extension"
 import thunk from "redux-thunk"
 
-import { gameReducer, charactersReducer } from "./reducers"
+import { gameReducer, ducksReducer } from "./reducers"
 
 const rootReducer = combineReducers({
   game: gameReducer,
-  characters: charactersReducer,
+  ducks: ducksReducer,
 })
 
 const store = createStore(
