@@ -4,13 +4,13 @@ import "normalize.css"
 import "./App.css"
 import { GlobalStyles } from "styles/"
 
-import { ReduxMonsters } from "views/"
+import { ReducksHunt } from "views/"
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <ReduxMonsters />
+      <ReducksHunt />
     </>
   )
 }
