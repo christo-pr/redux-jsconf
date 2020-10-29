@@ -1,77 +1,13 @@
-import React, { useEffect } from "react"
-import { connect } from "react-redux"
+import React from "react"
 
-import { shot, startGame, gameOver, showNewDuck, shotMiss } from "store/actions"
-import { Scenario, Gun, Stats, StartGameButton, Duck } from "components/"
+import { Scenario, Gun, Stats, StartGameButton } from "components/"
 
-const TIMEOUT = 700
-
-function ReducksHunt(props) {
-  const {
-    gameStarted,
-    lifes,
-    score,
-    duck,
-    showDuck,
-    shot,
-    shotMiss,
-    startGame,
-    gameOver,
-    showNewDuck,
-  } = props
-
-  useEffect(() => {
-    if (lifes === 0) {
-      gameOver()
-    }
-  }, [lifes])
-
-  const onDuckShot = (duckPoints) => {
-    shot(duckPoints)
-    setTimeout(() => {
-      console.log("Duck Shot")
-      showNewDuck()
-    }, TIMEOUT)
-  }
-
-  const onDuckShotMissed = () => {
-    shotMiss()
-    setTimeout(() => {
-      console.log("Duck Gone")
-      showNewDuck()
-    }, TIMEOUT)
-  }
-
+export default function ReducksHunt(props) {
   return (
     <Scenario>
       <Gun />
-      <Stats lifes={lifes} />
-      {gameStarted && showDuck && (
-        <Duck onShot={onDuckShot} onShotMiss={onDuckShotMissed} {...duck} />
-      )}
-      {!gameStarted && (
-        <StartGameButton onGameStart={() => startGame()} score={score} />
-      )}
+      <Stats lifes={3} />
+      <StartGameButton onGameStart={() => {}} score={0} />
     </Scenario>
   )
 }
-
-const mapStateToProps = (state) => {
-  return {
-    gameStarted: state.game.gameStarted,
-    lifes: state.game.lifes,
-    score: state.game.score,
-    duck: state.ducks.duck,
-    showDuck: state.ducks.showDuck,
-  }
-}
-
-const mapDispatchToProps = {
-  shot,
-  shotMiss,
-  startGame,
-  gameOver,
-  showNewDuck,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReducksHunt)
