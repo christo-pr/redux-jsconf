@@ -1,29 +1,29 @@
 {
   "files": {
     "main.css": "/redux-jsconf/static/css/main.ca0b0216.chunk.css",
-    "main.js": "/redux-jsconf/static/js/main.29e94ac8.chunk.js",
-    "main.js.map": "/redux-jsconf/static/js/main.29e94ac8.chunk.js.map",
+    "main.js": "/redux-jsconf/static/js/main.c13f8dfc.chunk.js",
+    "main.js.map": "/redux-jsconf/static/js/main.c13f8dfc.chunk.js.map",
     "runtime-main.js": "/redux-jsconf/static/js/runtime-main.6f2c14b6.js",
     "runtime-main.js.map": "/redux-jsconf/static/js/runtime-main.6f2c14b6.js.map",
     "static/css/2.764ccc25.chunk.css": "/redux-jsconf/static/css/2.764ccc25.chunk.css",
-    "static/js/2.eed7a9ee.chunk.js": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js",
-    "static/js/2.eed7a9ee.chunk.js.map": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js.map",
+    "static/js/2.8a5104d6.chunk.js": "/redux-jsconf/static/js/2.8a5104d6.chunk.js",
+    "static/js/2.8a5104d6.chunk.js.map": "/redux-jsconf/static/js/2.8a5104d6.chunk.js.map",
     "index.html": "/redux-jsconf/index.html",
-    "precache-manifest.d2de741f0ba56268215f5f46ea90c329.js": "/redux-jsconf/precache-manifest.d2de741f0ba56268215f5f46ea90c329.js",
+    "precache-manifest.bf9e201ff0e5e8b07b07e031123253b9.js": "/redux-jsconf/precache-manifest.bf9e201ff0e5e8b07b07e031123253b9.js",
     "service-worker.js": "/redux-jsconf/service-worker.js",
     "static/css/2.764ccc25.chunk.css.map": "/redux-jsconf/static/css/2.764ccc25.chunk.css.map",
     "static/css/main.ca0b0216.chunk.css.map": "/redux-jsconf/static/css/main.ca0b0216.chunk.css.map",
-    "static/js/2.eed7a9ee.chunk.js.LICENSE.txt": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js.LICENSE.txt",
+    "static/js/2.8a5104d6.chunk.js.LICENSE.txt": "/redux-jsconf/static/js/2.8a5104d6.chunk.js.LICENSE.txt",
     "static/media/PressStart2P-Regular.ttf": "/redux-jsconf/static/media/PressStart2P-Regular.2c404fd0.ttf",
-    "static/media/background-game.png": "/redux-jsconf/static/media/background-game.35ebd92b.png",
+    "static/media/duckhunt-sprite.png": "/redux-jsconf/static/media/duckhunt-sprite.383f2491.png",
     "static/media/heart-empty.png": "/redux-jsconf/static/media/heart-empty.dd662deb.png",
     "static/media/heart-full.webp": "/redux-jsconf/static/media/heart-full.fbbe3f46.webp"
   },
   "entrypoints": [
     "static/js/runtime-main.6f2c14b6.js",
     "static/css/2.764ccc25.chunk.css",
-    "static/js/2.eed7a9ee.chunk.js",
+    "static/js/2.8a5104d6.chunk.js",
     "static/css/main.ca0b0216.chunk.css",
-    "static/js/main.29e94ac8.chunk.js"
+    "static/js/main.c13f8dfc.chunk.js"
   ]
 }

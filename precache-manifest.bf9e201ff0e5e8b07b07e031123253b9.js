@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "43017f62ba23c3e37a9cb67100dc74dc",
+    "revision": "2b576dbdd9b7fa1ec884eba1b0170695",
     "url": "/redux-jsconf/index.html"
   },
   {
-    "revision": "4c8dd208ae82e74bc6d4",
+    "revision": "2a8b9174381dca31a8e0",
     "url": "/redux-jsconf/static/css/2.764ccc25.chunk.css"
   },
   {
-    "revision": "9221fa413f4a61ca1212",
+    "revision": "57cfe993705292e61cc5",
     "url": "/redux-jsconf/static/css/main.ca0b0216.chunk.css"
   },
   {
-    "revision": "4c8dd208ae82e74bc6d4",
-    "url": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js"
+    "revision": "2a8b9174381dca31a8e0",
+    "url": "/redux-jsconf/static/js/2.8a5104d6.chunk.js"
   },
   {
     "revision": "15ae086c36af272d8eff976ce9d43026",
-    "url": "/redux-jsconf/static/js/2.eed7a9ee.chunk.js.LICENSE.txt"
+    "url": "/redux-jsconf/static/js/2.8a5104d6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9221fa413f4a61ca1212",
-    "url": "/redux-jsconf/static/js/main.29e94ac8.chunk.js"
+    "revision": "57cfe993705292e61cc5",
+    "url": "/redux-jsconf/static/js/main.c13f8dfc.chunk.js"
   },
   {
     "revision": "3c8c1c4fc544d8be8bbf",
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/redux-jsconf/static/media/PressStart2P-Regular.2c404fd0.ttf"
   },
   {
-    "revision": "35ebd92bb2411d90be32bd4348e19ea6",
-    "url": "/redux-jsconf/static/media/background-game.35ebd92b.png"
+    "revision": "383f2491b97d445cc618d1ec120eba4e",
+    "url": "/redux-jsconf/static/media/duckhunt-sprite.383f2491.png"
   },
   {
     "revision": "dd662deb928a501fa22919841e32aedb",
